@@ -34,6 +34,31 @@ function App() {
     handleDeleteTodo(index);
   }
 
+  function moveTodoUp(index) {
+    if (index > 0) {
+      const updatedTodoList = [...todos];
+
+      [updatedTodoList[index], updatedTodoList[index - 1]] = [
+        updatedTodoList[index - 1],
+        updatedTodoList[index]
+      ];
+      setTodos(updatedTodoList);
+      persistData(updatedTodoList);
+    }
+  }
+  function moveTodoDown(index) {
+    if (index < todos.length - 1) {
+      const updatedTodoList = [...todos];
+
+      [updatedTodoList[index], updatedTodoList[index + 1]] = [
+        updatedTodoList[index + 1],
+        updatedTodoList[index]
+      ];
+      setTodos(updatedTodoList);
+      persistData(updatedTodoList);
+    }
+  }
+
   useEffect(() => {
     if (!localStorage) {
       return;
@@ -58,6 +83,8 @@ function App() {
         todos={todos}
         handleDeleteTodo={handleDeleteTodo}
         handleEditTodo={handleEditTodo}
+        moveTodoUp={moveTodoUp}
+        moveTodoDown={moveTodoDown}
       />
     </>
   );

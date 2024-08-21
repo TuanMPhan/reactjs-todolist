@@ -11,14 +11,15 @@ function App() {
   const [todoValue, setTodoValue] = useState("");
 
   function persistData(newList) {
-    localStorage.setItem('todos', JSON.stringify({todos: newList}))
+    localStorage.setItem("todos", JSON.stringify({ todos: newList }));
   }
 
   function handleAddTodos(newTodo) {
-    const newTodoList = [...todos, newTodo];
-    persistData(newTodoList);
-    setTodos(newTodoList);
-    
+    if (newTodo.trim() !== "") {
+      const newTodoList = [...todos, newTodo];
+      persistData(newTodoList);
+      setTodos(newTodoList);
+    }
   }
 
   function handleDeleteTodo(index) {
@@ -38,18 +39,26 @@ function App() {
       return;
     }
 
-    let localTodos = localStorage.getItem('todos');
+    let localTodos = localStorage.getItem("todos");
     if (!localTodos) {
       return;
     }
     localTodos = JSON.parse(localTodos).todos;
     setTodos(localTodos);
-  }, [])
+  }, []);
 
   return (
     <>
-      <TodoInput handleAddTodos={handleAddTodos} todoValue={todoValue} setTodoValue={setTodoValue}/>
-      <TodoList todos={todos} handleDeleteTodo={handleDeleteTodo} handleEditTodo={handleEditTodo}/>
+      <TodoInput
+        handleAddTodos={handleAddTodos}
+        todoValue={todoValue}
+        setTodoValue={setTodoValue}
+      />
+      <TodoList
+        todos={todos}
+        handleDeleteTodo={handleDeleteTodo}
+        handleEditTodo={handleEditTodo}
+      />
     </>
   );
 }
